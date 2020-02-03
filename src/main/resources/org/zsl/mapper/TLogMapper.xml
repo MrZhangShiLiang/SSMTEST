@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zsl.mapper.TLogMapper">
+  <resultMap id="BaseResultMap" type="org.zsl.po.TLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userType" jdbcType="VARCHAR" property="usertype" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="param" jdbcType="VARCHAR" property="param" />
+    <result column="addTime" jdbcType="TIMESTAMP" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userType, ip, description, param, addTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.zsl.po.TLog">
+    insert into t_log (id, userType, ip, 
+      description, param, addTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{usertype,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{param,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.zsl.po.TLog">
+    insert into t_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="usertype != null">
+        userType,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="param != null">
+        param,
+      </if>
+      <if test="addtime != null">
+        addTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="usertype != null">
+        #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="param != null">
+        #{param,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.zsl.po.TLog">
+    update t_log
+    <set>
+      <if test="usertype != null">
+        userType = #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="param != null">
+        param = #{param,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.zsl.po.TLog">
+    update t_log
+    set userType = #{usertype,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      param = #{param,jdbcType=VARCHAR},
+      addTime = #{addtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
