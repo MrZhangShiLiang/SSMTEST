@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+ http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+">
+
+<!--
+    基于注解方式
+    1、要有自动代理
+    2、将被增强类和aspectJ由spring管理
+-->
+    <aop:aspectj-autoproxy/>
+
+    <bean id="userDao" class="org.zsl.proxy.aspectj.UserDao"/>
+    <bean id="myAspectJ" class="org.zsl.proxy.aspectj.MyAspectJ"/>
+
+</beans>

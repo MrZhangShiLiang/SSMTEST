@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+ http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+">
+
+<!--
+2、基于XML注解的方式
+    a、配置被增强类、配置增强类
+    b、配置aop
+        1、切点
+        2、配置相关方法
+-->
+
+    <bean id="xmlDao" class="org.zsl.proxy.aspectj.XMLDao"/>
+    <bean id="xmlAspectJ" class="org.zsl.proxy.aspectj.XMLAspectJ"/>
+
+    <aop:config>
+        <!--
+            aop:aspect与aop:advisor的区别
+                aop:aspect多个切点多个切面
+                aop:advisor 一个切点对于一个切面
+        -->
+        <aop:pointcut id="myPointcut1" expression="execution(* org.zsl.proxy.aspectj.XMLDao.add(..))" />
+        <aop:pointcut id="myPointcut2" expression="execution(* org.zsl.proxy.aspectj.XMLDao.delete(..))" />
+        <aop:pointcut id="myPointcut3" expression="execution(* org.zsl.proxy.aspectj.XMLDao.find(..))" />
+        <aop:pointcut id="myPointcut4" expression="execution(* org.zsl.proxy.aspectj.XMLDao.update(..))" />
+
+        <aop:aspect ref="xmlAspectJ">
+            <aop:before method="before" pointcut-ref="myPointcut1"/>
+            <aop:after-returning method="afterReturning" pointcut-ref="myPointcut2" returning="returning"/>
+            <aop:around method="around" pointcut-ref="myPointcut3"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="myPointcut4" throwing="e"/>
+        </aop:aspect>
+
+
+
+    </aop:config>
+
+</beans>
