@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+<!--该配置文件用于学习传统spring aop的代理实现-->
+    <!--目标类 target-->
+    <bean id="orderDao" class="org.zsl.proxy.classic.impl.OrderDaoImpl"/>
+    <bean id="customerDao" class="org.zsl.proxy.classic.impl.CustomerImpl"/>
+
+    <!--增强类-->
+    <bean id="myBeforeAdvice" class="org.zsl.proxy.classic.advisor.MyBeforeAdvice"/>
+    <bean id="myAroundProxy" class="org.zsl.proxy.classic.advisor.MyAroundAdvice"/>
+
+    <!--自动代理 BeanNameAutoProxyCreator 根据名称-->
+    <!--<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">-->
+        <!--<property name="beanNames" value="*Dao"/>-->
+        <!--<property name="interceptorNames" value="myAroundProxy"/>-->
+    <!--</bean>-->
+
+    <!--带有切点-->
+    <bean id="myPointCut" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice" ref="myAroundProxy"/>
+        <property name="pattern" value=".*add.*"/><!--add方法环绕-->
+    </bean>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+
+
+</beans>

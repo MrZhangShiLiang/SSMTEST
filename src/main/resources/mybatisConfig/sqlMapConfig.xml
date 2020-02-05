@@ -9,4 +9,8 @@
 
         </plugin>
     </plugins>-->
+    <!--设置可以使用打印sql在控制台-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
 </configuration>

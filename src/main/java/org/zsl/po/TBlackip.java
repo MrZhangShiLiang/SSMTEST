@@ -17,6 +17,19 @@ public class TBlackip {
 
     private Date time;
 
+    @Override
+    public String toString() {
+        return "TBlackip{" +
+                "id=" + id +
+                ", vid=" + vid +
+                ", ip='" + ip + '\'' +
+                ", city='" + city + '\'' +
+                ", browsertype='" + browsertype + '\'' +
+                ", platformtype='" + platformtype + '\'' +
+                ", time=" + time +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
