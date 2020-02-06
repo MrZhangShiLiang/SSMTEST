@@ -33,6 +33,37 @@ public class TBlog {
 
     private String content;
 
+    private TBlogtype tBlogtype;
+
+    public TBlogtype gettBlogtype() {
+        return tBlogtype;
+    }
+
+    public void settBlogtype(TBlogtype tBlogtype) {
+        this.tBlogtype = tBlogtype;
+    }
+
+    @Override
+    public String toString() {
+        return "TBlog{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", images='" + images + '\'' +
+                ", clicknum=" + clicknum +
+                ", commentnum=" + commentnum +
+                ", agreenum=" + agreenum +
+                ", istop=" + istop +
+                ", isrecommend=" + isrecommend +
+                ", updatetime=" + updatetime +
+                ", addtime=" + addtime +
+                ", status=" + status +
+                ", typeId=" + typeId +
+                ", content='" + content + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }

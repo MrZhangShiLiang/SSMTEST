@@ -157,6 +157,7 @@
                     <path>/</path>
                     <!-- 端口 -->
                     <port>7777</port>
+
                 </configuration>
                 <version>2.2</version>
             </plugin>

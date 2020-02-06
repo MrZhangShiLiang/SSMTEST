@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50723
 File Encoding         : 65001
 
-Date: 2020-02-03 16:40:23
+Date: 2020-02-06 23:24:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `t_blackip` (
   `platformType` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for t_blog
@@ -140,3 +140,61 @@ CREATE TABLE `t_visit` (
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8740 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for zsl_items
+-- ----------------------------
+DROP TABLE IF EXISTS `zsl_items`;
+CREATE TABLE `zsl_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `price` float(10,2) DEFAULT NULL,
+  `pic` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `createtime` date DEFAULT NULL,
+  `detail` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for zsl_orderdetail
+-- ----------------------------
+DROP TABLE IF EXISTS `zsl_orderdetail`;
+CREATE TABLE `zsl_orderdetail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ordersId` int(11) DEFAULT NULL,
+  `itemsId` int(11) DEFAULT NULL,
+  `itemsNum` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ordersId` (`ordersId`),
+  KEY `itemsId` (`itemsId`),
+  CONSTRAINT `zsl_orderdetail_ibfk_1` FOREIGN KEY (`ordersId`) REFERENCES `zsl_orders` (`id`),
+  CONSTRAINT `zsl_orderdetail_ibfk_2` FOREIGN KEY (`itemsId`) REFERENCES `zsl_items` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for zsl_orders
+-- ----------------------------
+DROP TABLE IF EXISTS `zsl_orders`;
+CREATE TABLE `zsl_orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `number` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `createtime` date DEFAULT NULL,
+  `note` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `zsl_orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `zsl_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for zsl_user
+-- ----------------------------
+DROP TABLE IF EXISTS `zsl_user`;
+CREATE TABLE `zsl_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '注解',
+  `username` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '姓名',
+  `sex` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '性别',
+  `birthday` date DEFAULT NULL COMMENT '生日',
+  `address` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '地址',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;

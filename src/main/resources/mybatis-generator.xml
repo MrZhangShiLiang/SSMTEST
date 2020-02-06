@@ -47,7 +47,7 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库表  多个表示,可用多个table标签-->
-        <table tableName="t_blackip"
+        <!--<table tableName="t_blackip"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
@@ -102,6 +102,37 @@
                selectByExampleQueryId="false">
         </table>
         <table tableName="t_visit"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <table tableName="zsl_items"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+        <table tableName="zsl_orderdetail"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+        <table tableName="zsl_orders"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+        <table tableName="zsl_user"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zsl.mapper.TBlogMapper">
+
   <resultMap id="BaseResultMap" type="org.zsl.po.TBlog">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
@@ -20,6 +21,20 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.zsl.po.TBlog">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+
+    <!--定义resultMap，用于一对一 一对多等查询
+        也可以使用resultType，但是需要注意的是，在sql查出来的列需要与pojo实体类对应，一般是通过继承主表的实体类，然后添加所需属性
+        resultMap：需要自己配置对应关系，里面使用association，其property为实体类里关联的对象属性，javaType为全路径名
+    -->
+  <resultMap extends="ResultMapWithBLOBs" id="ResultMapWithType" type="org.zsl.po.TBlog">
+      <association property="tBlogtype" javaType="org.zsl.po.TBlogtype">
+          <id column="id" property="id"/>
+          <result column="typeName" property="typename"/>
+          <result column="addTime" property="addtime"/>
+          <result column="num" property="num"/>
+      </association>
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, title, introduction, keyword, images, clickNum, commentNum, agreeNum, isTop, 
     isRecommend, updateTime, addTime, status, type_id
@@ -234,4 +249,37 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!--学习使用mybatis-->
+    <select id="selectByTitle" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from t_blog
+        where title like  #{title}
+
+    </select>
+
+
+
+    <select id="selectCountByTitle" parameterType="org.zsl.po.TBlogVo" resultType="int">
+        select count(*) from t_blog where title like #{tBlog.title}
+    </select>
+
+    <select id="selectListByIds" parameterType="java.util.ArrayList" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from t_blog
+        where id in
+        <foreach collection="ids" open="(" separator="," close=")" item="id" >
+            #{id}
+        </foreach>
+    </select>
+
+    <!--学习使用一对一 、一对多查询-->
+    <select id="selectBlogWithType" resultMap="ResultMapWithType">
+        select t.*,s.typeName,s.num
+        from t_blog t,t_blogtype s
+        where t.type_id = s.id
+    </select>
 </mapper>
