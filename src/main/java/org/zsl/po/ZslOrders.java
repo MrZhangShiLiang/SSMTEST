@@ -1,6 +1,7 @@
 package org.zsl.po;
 
 import java.util.Date;
+import java.util.List;
 
 public class ZslOrders {
     private Integer id;
@@ -12,6 +13,30 @@ public class ZslOrders {
     private Date createtime;
 
     private String note;
+
+
+
+    private List<ZslOrderdetail> orderdetails;
+
+    public List<ZslOrderdetail> getOrderdetails() {
+        return orderdetails;
+    }
+
+    public void setOrderdetails(List<ZslOrderdetail> orderdetails) {
+        this.orderdetails = orderdetails;
+    }
+
+
+
+    private ZslUser zslUser;
+
+    public ZslUser getZslUser() {
+        return zslUser;
+    }
+
+    public void setZslUser(ZslUser zslUser) {
+        this.zslUser = zslUser;
+    }
 
     public Integer getId() {
         return id;

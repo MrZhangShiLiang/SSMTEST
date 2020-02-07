@@ -90,4 +90,73 @@
       address = #{address,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--
+    一对多 查询用户关联查询该用户的订单信息
+    使用resultMap  针对新增的属性为非集合时，使用association，为集合时使用collection
+-->
+   <resultMap extends="BaseResultMap" id="One2MoreResultMap" type="org.zsl.po.ZslUser" >
+       <collection property="orders" ofType="org.zsl.po.ZslOrders">
+           <id column="id" jdbcType="INTEGER" property="id" />
+           <result column="userId" jdbcType="INTEGER" property="userid" />
+           <result column="number" jdbcType="VARCHAR" property="number" />
+           <result column="createtime" jdbcType="DATE" property="createtime" />
+           <result column="note" jdbcType="VARCHAR" property="note" />
+       </collection>
+   </resultMap>
+  <select id="selectOne2MoreByResultMap" resultMap="One2MoreResultMap">
+     select u.*,t.note,t.createtime
+    from zsl_orders t,zsl_user u
+    where t.userId=u.id
+ </select>
+<!--
+    一对多复杂
+-->
+   <resultMap extends="BaseResultMap" id="DifficultResultMap" type="org.zsl.po.ZslUser" >
+       <!--<id column="id" jdbcType="INTEGER" property="id" />-->
+       <!--<result column="username" jdbcType="VARCHAR" property="username" />-->
+       <!--<result column="sex" jdbcType="VARCHAR" property="sex" />-->
+       <!--<result column="birthday" jdbcType="DATE" property="birthday" />-->
+       <!--<result column="address" jdbcType="VARCHAR" property="address" />-->
+       <collection property="orders" ofType="org.zsl.po.ZslOrders">
+           <id column="ordersPriId" jdbcType="INTEGER" property="id" />
+           <result column="userId" jdbcType="INTEGER" property="userid" />
+           <result column="number" jdbcType="VARCHAR" property="number" />
+           <result column="ordersCreateTime" jdbcType="DATE" property="createtime" />
+           <result column="ordersNote" jdbcType="VARCHAR" property="note" />
+           <collection property="orderdetails" ofType="org.zsl.po.ZslOrderdetail">
+               <id column="orderDetailId" jdbcType="INTEGER" property="id" />
+               <result column="ordersId" jdbcType="INTEGER" property="ordersid" />
+               <result column="orderDetailItemsId" jdbcType="INTEGER" property="itemsid" />
+               <result column="orderDetailItemNum" jdbcType="INTEGER" property="itemsnum" />
+               <association property="zslItems" javaType="org.zsl.po.ZslItems">
+                   <id column="ItemsId" jdbcType="INTEGER" property="id" />
+                   <result column="itemsName" jdbcType="VARCHAR" property="name" />
+                   <result column="itemsPrice" jdbcType="REAL" property="price" />
+                   <result column="pic" jdbcType="VARCHAR" property="pic" />
+                   <result column="createtime" jdbcType="DATE" property="createtime" />
+                   <result column="detail" jdbcType="VARCHAR" property="detail" />
+               </association>
+           </collection>
+       </collection>
+   </resultMap>
+
+  <select id="selectOne2MoreByDifficult" resultMap="DifficultResultMap">
+        SELECT
+            u.*,
+            o.note as ordersNote,
+            o.createtime as ordersCreateTime,
+            od.itemsId as orderDetailItemsId,
+            od.itemsNum as orderDetailItemNum,
+            i.name as itemsName,
+            i.price as itemsPrice,
+            o.id as ordersPriId,
+            od.id as orderDetailId,
+            i.id as ItemsId
+        from zsl_user u,zsl_orders o,zsl_orderdetail od,zsl_items i
+        where
+              u.id = o.userId
+              and o.id=od.ordersId
+              and od.itemsId=i.id
+  </select>
 </mapper>

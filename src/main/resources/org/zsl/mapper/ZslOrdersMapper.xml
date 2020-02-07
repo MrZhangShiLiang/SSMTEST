@@ -90,4 +90,32 @@
       note = #{note,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--
+    一对一，使用resultType，相对简单，继承主表，新增PO的增强类，要求sql查出的列名与po类相同
+  -->
+  <select id="selectOrdersWithUser" resultType="org.zsl.po.ZslOrdersCustom">
+      select t.*,u.username,u.sex
+      from zsl_orders t,zsl_user u
+      where t.userId=u.id
+  </select>
+    <!--
+     一对一，BaseResultMap，针对主表，需要加入属性，再次配置resultMap
+   -->
+  <resultMap extends="BaseResultMap" id="ResultMapWithUser" type="org.zsl.po.ZslOrders">
+    <association property="zslUser" javaType="org.zsl.po.ZslUser">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="sex" jdbcType="VARCHAR" property="sex" />
+        <result column="birthday" jdbcType="DATE" property="birthday" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+    </association>
+  </resultMap>
+    <select id="selectOrdersWithUserUsingResultMap" resultMap="ResultMapWithUser">
+      select t.*,u.username,u.sex
+      from zsl_orders t,zsl_user u
+      where t.userId=u.id
+  </select>
+<!--==================================================================-->
+
+
 </mapper>

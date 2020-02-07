@@ -9,6 +9,16 @@ public class ZslOrderdetail {
 
     private Integer itemsnum;
 
+    private ZslItems zslItems;
+
+    public ZslItems getZslItems() {
+        return zslItems;
+    }
+
+    public void setZslItems(ZslItems zslItems) {
+        this.zslItems = zslItems;
+    }
+
     public Integer getId() {
         return id;
     }

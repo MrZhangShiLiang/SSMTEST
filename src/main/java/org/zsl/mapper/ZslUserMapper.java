@@ -2,6 +2,8 @@ package org.zsl.mapper;
 
 import org.zsl.po.ZslUser;
 
+import java.util.List;
+
 public interface ZslUserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,8 @@ public interface ZslUserMapper {
     int updateByPrimaryKeySelective(ZslUser record);
 
     int updateByPrimaryKey(ZslUser record);
+
+    List<ZslUser> selectOne2MoreByResultMap();
+
+    List<ZslUser> selectOne2MoreByDifficult();
 }
